@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="snaker" default="build">
+	<property name="prj.dir" value="." />
+	<property name="src.dir" value="src" />
+	<property name="conf.dir" value="conf" />
+	<property name="engines.dir" value="engines" />
+	<property name="lib.dir" value="lib" />
+	<property name="web.dir" value="webapps" />
+	<property name="build.dir" value="build" />
+	<property name="build.classes" value="${build.dir}/classes" />
+	<property name="dist.dir" value="${build.dir}/dist" />
+	<property name="user.name" value="SHAN YIN"/>
+	<property name="version.number" value="1.00"/>
+	
+
+	<path id="prj.classpath">
+		<pathelement path="./" />
+		<pathelement path="${src.dir}" />
+		<fileset file="${lib.dir}/*.jar" />
+	</path>
+
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes}" />
+	</target>
+	<target name="compile" depends="init">
+		<javac sourcepath="" srcdir="${src.dir}" destdir="${build.classes}">
+			<classpath refid="prj.classpath" />
+		</javac>
+	</target>
+	<target name="jar" depends="compile">
+		<buildnumber file="build.num"/>
+		<delete file="snaker.jar"/>
+		<delete file="MANIFEST.MF"/>
+		<manifest file="MANIFEST.MF">
+		    <attribute name="Built-By" value="${user.name}"/>
+		    <attribute name="Main-Class" value="com.snaker.Entry"/>
+			<attribute name="Implementation-Version" value="${version.number}_b${build.number}"/> 
+		</manifest>
+		<jar destfile="snaker.jar" manifest="MANIFEST.MF">
+			<fileset dir="${build.classes}" />
+			<fileset dir="${conf.dir}" />
+		</jar>
+	</target>
+	<target name="build" depends="jar">
+		<copy file="snaker.jar" todir="${dist.dir}" />
+		<copy file="startSnaker.bat" todir="${dist.dir}" />
+		<copy todir="${dist.dir}/lib">
+			<fileset file="${lib.dir}/*.jar" />
+		</copy>
+		<copy todir="${dist.dir}/webapps">
+			<fileset dir="${web.dir}" />
+		</copy>
+		<copy todir="${dist.dir}/engines">
+			<fileset dir="${engines.dir}" />
+		</copy>
+		<property name="zip.file" value="snaker_${version.number}_b${build.number}.zip"/>
+		<zip destfile="${build.dir}/${zip.file}"
+		       basedir="${dist.dir}"
+		       update="true"
+		  />
+	</target>
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+</project>
