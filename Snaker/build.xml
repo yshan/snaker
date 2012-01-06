@@ -45,6 +45,7 @@
 	<target name="build" depends="jar">
 		<copy file="snaker.jar" todir="${dist.dir}" />
 		<copy file="startSnaker.bat" todir="${dist.dir}" />
+		<copy file="startSnaker.sh" todir="${dist.dir}" />
 		<copy todir="${dist.dir}/lib">
 			<fileset file="${lib.dir}/*.jar" />
 		</copy>
