@@ -64,8 +64,8 @@ public abstract class Task implements Runnable{
 		return proxy;
 	}
 	public void setSavePath(String savePath) {
-		if(!savePath.endsWith("/")){
-			savePath += "/";
+		if(!savePath.endsWith(File.separator)){
+			savePath += File.separator;
 		}
 		this.savePath = savePath;
 	}

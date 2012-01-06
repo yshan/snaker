@@ -15,6 +15,7 @@
  */
 package com.snaker;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -297,8 +298,8 @@ public class Downloader {
 	 * @param subFolder the subFolder to set
 	 */
 	public void setSubFolder(String subFolder) {
-		if(!subFolder.endsWith("/")){
-			subFolder += "/";
+		if(!subFolder.endsWith(File.separator)){
+			subFolder += File.separator;
 		}
 		this.subFolder = subFolder;
 	}
