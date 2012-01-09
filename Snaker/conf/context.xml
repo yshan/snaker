@@ -15,9 +15,13 @@
 	
 	<bean id="taskManager" class="com.snaker.TaskManager">
 		<property name="downloadManager"><ref bean="downloadManager"/></property>
+		<property name="recognizerManager"><ref bean="recognizerManager"/></property>
 	</bean>
 	
 	<bean id="downloadManager" class="com.snaker.DownloadManager">
 		<constructor-arg ref="setting"/>
+	</bean>
+	
+	<bean id="recognizerManager" class="com.snaker.RecognizerManager">
 	</bean>
 </beans>

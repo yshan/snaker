@@ -16,6 +16,7 @@
 package com.snaker;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,7 +44,8 @@ public class Downloader {
 	private long received;
 	private String fileName;
 	private String subFolder;
-	private String responseBody;
+	private String responseCharset = DEFAULT_RESPONSE_CHARSET;
+	private byte[] responseBody;
 	private DownloadParams parms;
 	private long startTime;
 	private long endTime;
@@ -52,9 +54,9 @@ public class Downloader {
 	// the total speed Statistics time , 10s
 	public static long SPEED_WINDOW_SIZE = 10 * 1000L;
 	public static long SPEED_UPDATE_FREQ = 1 * 1000L;
+	private static final String DEFAULT_RESPONSE_CHARSET="utf8";
 	private LinkedList<SpeedRecord> speeds = new LinkedList<SpeedRecord>();
 	private DownloadObserver observer = null;
-	
 
 	public DownloadObserver getObserver() {
 		return observer;
@@ -106,9 +108,22 @@ public class Downloader {
 	public List<Header> getResponseHeaders() {
 		return responseHeaders;
 	}
+	
+	public byte[] getResponseBody(boolean clean){
+		byte[] result = responseBody;
+		if(clean){
+			responseBody = null;
+		}
+		return result;
+	}
 
 	public String getResponseBodyAsString(boolean clean){
-		String result = responseBody;
+		String result;
+		try {
+			result = new String(responseBody,responseCharset);
+		} catch (UnsupportedEncodingException e) {
+			result = new String(responseBody);
+		}
 		if(clean){
 			responseBody = null;
 		}
@@ -118,7 +133,8 @@ public class Downloader {
 	public List<String> findInBody(Pattern p) {
 		List<String> result = new ArrayList<String>();
 		if (responseBody != null) {
-			Matcher ms = p.matcher(responseBody);
+			String body = getResponseBodyAsString(true);
+			Matcher ms = p.matcher(body);
 			while (ms.find()) {
 				String s = ms.group();
 				result.add(s);
@@ -182,8 +198,8 @@ public class Downloader {
 		return fileName;
 	}
 
-	public void setResponseBody(String responseBody) {
-		this.responseBody = responseBody;
+	public void setResponseBody(byte[] content) {
+		this.responseBody = content;
 	}
 
 	private synchronized boolean newRecord(long tick, long r) {
@@ -325,5 +341,14 @@ public class Downloader {
 
 	public void setHost(String host) {
 		this.host = host;
+	}
+
+	public String getResponseCharset() {
+		return responseCharset;
+	}
+
+	public void setResponseCharset(String responseCharset) {
+		if(responseCharset!=null && !responseCharset.isEmpty())
+			this.responseCharset = responseCharset;
 	}
 }

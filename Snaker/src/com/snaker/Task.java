@@ -38,6 +38,7 @@ public abstract class Task implements Runnable{
 	private String savePath;
 	private List<Downloader> downloadings = new ArrayList<Downloader>();
 	private DownloadManager downloadManager;
+	private RecognizerManager recognizerManager;
 	private Set<String> downloadedUrls = new HashSet<String>();
 	public long getStartTime() {
 		return startTime;
@@ -102,6 +103,14 @@ public abstract class Task implements Runnable{
 		d.setParms(parms);
 		send(d);
 		return d;
+	}
+	public String recognize(String url) throws IOException{
+		Downloader d = sendGet(url);
+		byte[] image = d.getResponseBody(true);
+		if(recognizerManager!=null){
+			return recognizerManager.recognize(url,image);
+		}
+		return null;
 	}
 	public Downloader save(String url) throws IOException {
 		return save(url,null,null);
@@ -217,5 +226,11 @@ public abstract class Task implements Runnable{
 	}
 	public DownloadManager getDownloadManager() {
 		return downloadManager;
+	}
+	public RecognizerManager getRecognizerManager() {
+		return recognizerManager;
+	}
+	public void setRecognizerManager(RecognizerManager recognizerManager) {
+		this.recognizerManager = recognizerManager;
 	} 
 }

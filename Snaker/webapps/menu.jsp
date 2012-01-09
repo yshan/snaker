@@ -8,6 +8,11 @@
 %>
 <link href="css/droppy.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="js/jquery.droppy.js"></script>
+<script type="text/javascript" src="js/recognize.js"></script>
+<style>
+#recognize {top:600px; left:150px; width:130px; position:fixed;}
+#recognize {position:absolute;}
+</style>
 
 <script type='text/javascript'>
   $(function() {
@@ -27,3 +32,9 @@
   <li><a href='downloaded.jsp'>Finished</a></li>
   <li><a href='setting.jsp'>Setting</a></li>
 </ul>
+
+<div id="recognize" style="display:none">
+	Please help recognize the image:
+	<input type="text" id="reco_result"/>
+	<img id="reco_image"></img>
+</div>

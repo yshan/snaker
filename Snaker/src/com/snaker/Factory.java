@@ -27,6 +27,7 @@ public class Factory implements ApplicationContextAware {
 	private TaskManager taskManager;
 	private EngineManager engineManager;
 	private DownloadManager downloadManager;
+	private RecognizerManager recognizerManager;
 	
 	/**
 	 * constructor.
@@ -110,5 +111,13 @@ public class Factory implements ApplicationContextAware {
 
 	public void setEngineManager(EngineManager engineManager) {
 		this.engineManager = engineManager;
+	}
+
+	public RecognizerManager getRecognizerManager() {
+		return recognizerManager;
+	}
+
+	public void setRecognizerManager(RecognizerManager recognizerManager) {
+		this.recognizerManager = recognizerManager;
 	}
 }

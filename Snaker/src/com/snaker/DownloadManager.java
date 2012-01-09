@@ -34,11 +34,13 @@ import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.snaker.Downloader.Status;
 import com.snaker.Setting.Proxy;
+import com.snaker.ssl.EasySSLProtocolSocketFactory;
 
 public class DownloadManager {
 	private static Log logger = LogFactory.getLog(DownloadManager.class);
@@ -49,6 +51,12 @@ public class DownloadManager {
 	private Collection<Downloader> downloadings = new LinkedBlockingQueue<Downloader>();
 	private LinkedBlockingDeque<Downloader> downloaded = new LinkedBlockingDeque<Downloader>();
 	private DownloadQueue queue = new DownloadQueue();
+	
+	static{
+		@SuppressWarnings("deprecation")
+		Protocol easyhttps = new Protocol("https", new EasySSLProtocolSocketFactory(),443);
+		Protocol.registerProtocol("https", easyhttps); 
+	}
 
 	public DownloadManager(Setting s) {
 		defaultPool = Executors.newFixedThreadPool(s.getMaxConcurrentDownload());
@@ -174,10 +182,11 @@ public class DownloadManager {
 					d.setStatus(Status.RUNNING);
 					// recv the body
 					if (handler == null) {
-						String content = m.getResponseBodyAsString();
-						int len = content.length();
+						byte[] content = m.getResponseBody();
+						int len = content.length;
 						d.setFileSize(len);
 						d.setReceived(len);
+						m.getResponseCharSet();
 						d.setResponseBody(content);
 					} else {
 						InputStream is = m.getResponseBodyAsStream();

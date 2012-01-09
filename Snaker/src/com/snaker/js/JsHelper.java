@@ -84,6 +84,13 @@ public class JsHelper extends NativeObject {
 		Downloader d = task.sendGet(url);
 		return createResponse(d);
 	}
+	
+	public String jsFunction_recognize(String url) throws IOException,
+			IllegalAccessException, InstantiationException,
+			InvocationTargetException {
+		String result = task.recognize(url);
+		return result;
+	}
 
 	private NativeObject createResponse(Downloader d) {
 		NativeObject response = new NativeObject();

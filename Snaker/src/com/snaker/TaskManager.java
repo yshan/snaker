@@ -21,6 +21,7 @@ import java.util.List;
 public class TaskManager {
 	private List<Task> tasks = new ArrayList<Task>();
 	private DownloadManager downloadManager;
+	private RecognizerManager recognizerManager;
 	
 	public List<Task> getTasks(){
 		return tasks;
@@ -34,6 +35,7 @@ public class TaskManager {
 		}
 		t.setStartTime(now);
 		t.setDownloadManager(downloadManager);
+		t.setRecognizerManager(recognizerManager);
 		t.setStatus(Task.Status.RUNNING);
 		tasks.add(t);
 		new Thread(t).start();
@@ -45,5 +47,15 @@ public class TaskManager {
 
 	public DownloadManager getDownloadManager() {
 		return downloadManager;
+	}
+
+
+	public RecognizerManager getRecognizerManager() {
+		return recognizerManager;
+	}
+
+
+	public void setRecognizerManager(RecognizerManager recognizerManager) {
+		this.recognizerManager = recognizerManager;
 	}
 }
