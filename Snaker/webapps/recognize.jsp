@@ -23,5 +23,12 @@
 			os.write(item.getImage());
 			os.close();
 		}
+		return;
+	}
+	else if("complete".equals(action)){
+		String id = request.getParameter("id");
+		String result = request.getParameter("result");
+		rm.complete(Long.parseLong(id),result);
+		return;
 	}
 %>

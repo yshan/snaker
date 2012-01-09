@@ -10,7 +10,7 @@
 <script type="text/javascript" src="js/jquery.droppy.js"></script>
 <script type="text/javascript" src="js/recognize.js"></script>
 <style>
-#recognize {top:600px; left:150px; width:130px; position:fixed;}
+#recognize  {background-color:#FF0000;width:100%;position:fixed;}
 #recognize {position:absolute;}
 </style>
 
@@ -37,4 +37,5 @@
 	Please help recognize the image:
 	<input type="text" id="reco_result"/>
 	<img id="reco_image"></img>
+	<input type="button" value="Done" id="reco_done"/>
 </div>

@@ -115,7 +115,10 @@ public class RecognizerManager {
 					break;
 				}
 			}
-			if(ri!=null){
+		}
+		
+		if(ri!=null){
+			synchronized(ri){
 				items.remove(ri);
 				ri.notifyAll();
 			}
