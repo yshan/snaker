@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset="utf8" %> 
+<%@ page contentType="text/html; charset=utf8" %> 
 <%@ page language="java" import="java.util.*" %>
 <%@ page language="java" import="com.snaker.*,com.snaker.eng.*" %>
 <%
