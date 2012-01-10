@@ -85,10 +85,10 @@ public class JsHelper extends NativeObject {
 		return createResponse(d);
 	}
 	
-	public String jsFunction_recognize(String url) throws IOException,
+	public String jsFunction_recognize(String url,boolean manual) throws IOException,
 			IllegalAccessException, InstantiationException,
 			InvocationTargetException {
-		String result = task.recognize(url);
+		String result = task.recognize(url,manual);
 		return result;
 	}
 

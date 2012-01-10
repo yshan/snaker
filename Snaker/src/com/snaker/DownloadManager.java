@@ -186,7 +186,7 @@ public class DownloadManager {
 						int len = content.length;
 						d.setFileSize(len);
 						d.setReceived(len);
-						m.getResponseCharSet();
+						d.setResponseCharset(m.getResponseCharSet());
 						d.setResponseBody(content);
 					} else {
 						InputStream is = m.getResponseBodyAsStream();

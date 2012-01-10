@@ -20,12 +20,16 @@ import java.util.LinkedList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.snaker.ocr.OCR;
+import com.snaker.ocr.OCRException;
+
 /**
  * @author sandy_yin
  *
  */
 public class RecognizerManager {
 	private static Log logger = LogFactory.getLog(RecognizerManager.class);
+	private OCR ocr;
 	
 	public static class RecognizeItem{
 		public long getId() {
@@ -66,25 +70,38 @@ public class RecognizerManager {
 	}
 	private LinkedList<RecognizeItem> items = new LinkedList<RecognizeItem>();
 	
-	public String recognize(String url,byte[] image){
-		RecognizeItem item = new RecognizeItem();
-		item.id = System.nanoTime();
-		item.url = url;
-		item.image = image;
-		item.completed = false;
-		synchronized(items){
-			items.add(item);
-		}
-		synchronized(item){ 
-			while(!item.completed){
-				try {
-					item.wait();
-				} catch (InterruptedException e) {
-					logger.error("wait error",e);
-				}
+	public String recognize(String url,byte[] image, boolean manual){
+		String result = null;
+		if(ocr!=null && !manual){
+			try {
+				result = ocr.recognize(image);
+			} catch (OCRException e) {
+				logger.error("recognize failed",e);
 			}
 		}
-		return item.result;
+		
+		if(result==null || result.isEmpty()){
+			RecognizeItem item = new RecognizeItem();
+			item.id = System.nanoTime();
+			item.url = url;
+			item.image = image;
+			item.completed = false;
+			synchronized(items){
+				items.add(item);
+			}
+			synchronized(item){ 
+				while(!item.completed){
+					try {
+						item.wait();
+					} catch (InterruptedException e) {
+						logger.error("wait error",e);
+					}
+				}
+			}
+			result=item.result;
+		}
+		
+		return result;
 	}
 	
 	public RecognizeItem peek(){
@@ -123,5 +140,13 @@ public class RecognizerManager {
 				ri.notifyAll();
 			}
 		}
+	}
+
+	public OCR getOcr() {
+		return ocr;
+	}
+
+	public void setOcr(OCR ocr) {
+		this.ocr = ocr;
 	}
 }

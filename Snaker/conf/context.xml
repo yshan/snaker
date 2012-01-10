@@ -23,5 +23,9 @@
 	</bean>
 	
 	<bean id="recognizerManager" class="com.snaker.RecognizerManager">
+		<property name="ocr"><ref bean="tessocr"/></property>
+	</bean>
+	
+	<bean id="tessocr" class="com.snaker.ocr.TesseractOCR">
 	</bean>
 </beans>

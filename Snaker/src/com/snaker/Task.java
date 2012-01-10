@@ -104,12 +104,12 @@ public abstract class Task implements Runnable{
 		send(d);
 		return d;
 	}
-	public String recognize(String url) throws IOException{
+	public String recognize(String url, boolean manual) throws IOException{
 		Downloader d = sendGet(url);
 		if(d.getStatus()==Downloader.Status.FINISHED){
 			byte[] image = d.getResponseBody(true);
 			if(recognizerManager!=null){
-				return recognizerManager.recognize(url,image);
+				return recognizerManager.recognize(url,image,manual);
 			}
 		}
 		return null;
