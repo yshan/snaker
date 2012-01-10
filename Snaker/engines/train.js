@@ -45,8 +45,11 @@ function downloadLesson(lesson){
 function login(){
 	//get a rand code
 	var pic = "https://dynamic.12306.cn/otsweb/passCodeAction.do?rand=lrand";
-	var code = $.recognize(pic); 
-	if(code==null || code=='') return false;
+	var code = $.recognize(pic,true); 
+	if(code==null || code=='' || code.length!=4) {
+		$.print("Bad code:"+code);
+		return false;
+	}
 	//send the login query
 	var param = {};
 	param["loginUser.user_name"] = $.userName;
@@ -55,11 +58,23 @@ function login(){
 	param["org.apache.struts.taglib.html.TOKEN"]="835e9d72d94e2c1f691c6566790810b5";
 	var url = "https://dynamic.12306.cn/otsweb/loginAction.do?method=login";
 	var response = $.post(url,param);
-	$.print(response.body);
-	return true;
+	var body= response.body;
+	$.print(body);
+	if(body.indexOf("您最后一次登录时间为")!=-1){
+		$.print("登录成功");
+		return true;
+	}
+	else if(body.indexOf("请输入正确的验证码")!=-1){
+		$.print("验证码错误");
+		return false;
+	}
+	else{
+		$.print("登录失败");
+		return false;
+	}
 } 
 
-while(!login()){}
+while(!login()){$.sleep(1000);}
 
 
 

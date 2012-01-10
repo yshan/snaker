@@ -64,6 +64,14 @@ public class JsHelper extends NativeObject {
 	public void jsFunction_print(String s) {
 		logger.debug(s);
 	}
+	
+	public void jsFunction_sleep(int millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			logger.error("interrupted",e);
+		}
+	}
 
 	public Scriptable jsFunction_post(String url, NativeObject parms)
 			throws IOException, IllegalAccessException, InstantiationException,
