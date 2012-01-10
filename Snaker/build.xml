@@ -55,6 +55,9 @@
 		<copy todir="${dist.dir}/engines">
 			<fileset dir="${engines.dir}" />
 		</copy>
+		<copy todir="${dist.dir}/ocr">
+			<fileset dir="ocr" />
+		</copy>
 		<property name="zip.file" value="snaker_${version.number}_b${build.number}.zip"/>
 		<zip destfile="${build.dir}/${zip.file}"
 		       basedir="${dist.dir}"
