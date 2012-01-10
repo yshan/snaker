@@ -17,9 +17,10 @@ package com.snaker;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +34,7 @@ import com.snaker.js.JsTask;
 
 public class EngineManager {
 	private static final String ENGINE_FOLDER = "engines";
+	private static final String ENGINE_CHARSET="utf8";
 	List<Engine> engines = new ArrayList<Engine>();
 	private static Log logger = LogFactory.getLog(EngineManager.class);
 
@@ -74,7 +76,7 @@ public class EngineManager {
 		BufferedReader br = null;
 		Engine def = new Engine();
 		try {
-			br = new BufferedReader(new FileReader(f));
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(f),ENGINE_CHARSET));
 			do {
 				String line = br.readLine();
 				if (line == null)

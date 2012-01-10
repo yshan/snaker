@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name		tianya
-// @title		tianya
+// @title		天涯贴图
 // @description	download picture from tianya.cn
 // ==/UserScript==
 
