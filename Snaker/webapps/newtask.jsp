@@ -45,14 +45,14 @@
 		var tmp;
 		<%for(Engine.EngineProperty property:properties){%>
 		tmp =  $.trim($('#<%=property.getName()%>').val());
-		if(tmp.length<=1 && <%=!property.isOptional()%>){
+		if(tmp.length<1 && <%=!property.isOptional()%>){
 			alert("Please fill the <%=property.getName()%>!");
+			$('#<%=property.getName()%>').focus();
 			return;
 		}
 		parms.<%=property.getName()%>= tmp;
 		<%}%>
 		parms.eng = '<%=engineName%>';
-		parms.password = $('#password').val();
 		parms.proxy = $('#proxy').val();
 		parms.path=$('#path').val();
 		parms.download = 1;
