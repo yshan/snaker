@@ -4,43 +4,17 @@
 // @description	2012火车购票
 // @parameter   *userName 登录名
 // @parameter   *password 密码
+// @parameter   *from 出发地
+// @parameter   *to 目的地
+// @parameter   *date 日期(YYYY-MM-DD)
+// @parameter   *trainCode 车次
+// @parameter   *trueName 姓名
+// @parameter   *pepoleId 身份证
+// @parameter   *telephone 电话号码
 // ==/UserScript==
 
-var lessonRegex = /http:\/\/englishpod.com\/lessons\/[^\"\/]*/mg;
-var mp3Regex = /http:\/\/s3.amazonaws.com\/englishpod\.com\/.*englishpod.*pr\.mp3/;
-var allLessons ={};
-
-function getLessons(page){
-	var url = "http://englishpod.com/lessons?page=" + page;
-	var response = $.get(url);
-	if (response.statusCode / 100 == 2) {
-		$.print("download Lesson successfully,url:" + url);
-		var body = response.body;
-		var lessons = body.match(lessonRegex);
-		for(i=0;i<lessons.length;i++){
-			$.print(lessons[i]);
-			allLessons[lessons[i]]=true;
-		}
-	} else {
-		$.("download failed,err:" + response.statusCode);
-	}
+function getStationCode(sta){
 }
-
-function downloadLesson(lesson){
-		var response = $.get(lesson);
-		if (response.statusCode / 100 == 2) {
-			$.print("download Lesson successfully");
-			var mp3 = response.body.match(mp3Regex);
-			if(mp3!=null && mp3.length>0){
-				mp3 = mp3[0];
-			}
-			if (mp3!=null) {
-				$.save(mp3);
-			}
-		} else {
-			$.print("download lesson failed,err:" + response.statusCode);
-		}
-	}
 
 function login(){
 	//get a rand code
@@ -72,9 +46,21 @@ function login(){
 		$.print("登录失败");
 		return false;
 	}
-} 
+}
+
+function queryTrain(){
+	var url = "https://dynamic.12306.cn/otsweb/order/querySingleAction.do?method=queryststrainall";
+	var param={};
+	param.date=$.date;
+	param.fromstation=getStationCode($.from);
+	param.tostation=getStationCode($.to);
+	param.starttime="00:00--24:00";
+	var response = $.post(url,param);
+	var body= response.body;
+	$.print(body);
+}
 
 while(!login()){$.sleep(1000);}
-
+queryTrain();
 
 

@@ -48,7 +48,7 @@ public class TesseractOCR implements OCR {
 		File dest = null;
 		try {
 			String prefix = System.nanoTime() + "";
-			source = File.createTempFile(prefix, "tess");
+			source = File.createTempFile(prefix, ".jpg");
 			DataOutputStream dos = new DataOutputStream(new FileOutputStream(
 					source));
 			dos.write(image);
@@ -56,7 +56,7 @@ public class TesseractOCR implements OCR {
 			dos.close();
 			String sourceFileName = source.getAbsolutePath();
 			Process p = Runtime.getRuntime().exec(
-					String.format("%s %s %s -l eng", tessExecutable,
+					String.format("%s %s %s -l eng nobatch digits", tessExecutable,
 							sourceFileName, sourceFileName));
 			String destFileName = sourceFileName + ".txt";
 			dest = new File(destFileName);
