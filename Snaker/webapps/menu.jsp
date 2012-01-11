@@ -36,7 +36,6 @@
 
 <div id="recognize" style="display:none">
 	Please help recognize the image:
-	<input type="text" id="reco_result"/>
+	<input type="text" id="reco_result" title="press enter to complete"/>
 	<img id="reco_image"></img>
-	<input type="button" value="Done" id="reco_done"/>
 </div>

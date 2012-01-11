@@ -23,10 +23,12 @@ function show_recognize_task(id){
 	var t = $(window).height()-100-$('#recognize').height();
 	$('#recognize').offset({ top: t, left: 0 });
 	
-	$('#reco_done').click(function(){
-		var result = $('#reco_result').val();
-		$('#recognize').hide();
-		complete_recognize(id,result);
+	$('#reco_result').keydown(function(event){
+		if (event.keyCode == '13') {
+     		var result = $('#reco_result').val();
+			$('#recognize').hide();
+			complete_recognize(id,result);
+   		}
 	});
 }
 
@@ -47,7 +49,7 @@ function check_recognize(){
 			   	}
 		   },
 		   error: function(req,status,err){
-		   		alert("read recognize task failed, due to:"+req.statusText);
+		   		window.setTimeout(check_recognize,10000);
 		   }
 	});
 }
