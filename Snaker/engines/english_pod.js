@@ -2,8 +2,8 @@
 // @name		EnglishPod
 // @title		English Pod
 // @description	download lessons from englishpod.com
-// @parameter   *email Email
-// @parameter   *password Password
+// @parameter   *email text Email
+// @parameter   *password password Password
 // ==/UserScript==
 
 var lessonRegex = /http:\/\/englishpod.com\/lessons\/[^\"\/]*/mg;

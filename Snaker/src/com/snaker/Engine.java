@@ -80,7 +80,16 @@ public class Engine {
 			this.optional = optional;
 		}
 
+		public String getInputType() {
+			return inputType;
+		}
+
+		public void setInputType(String inputType) {
+			this.inputType = inputType;
+		}
+
 		private String title;
+		private String inputType;
 		private boolean optional;
 	}
 
@@ -90,10 +99,11 @@ public class Engine {
 		return properties;
 	}
 
-	public void addProperty(String name, String title, boolean optional) {
+	public void addProperty(String name, String title, String inputType, boolean optional) {
 		EngineProperty p = new EngineProperty();
 		p.setName(name);
 		p.setTitle(title);
+		p.setInputType(inputType.toLowerCase());
 		p.setOptional(optional);
 		properties.add(p);
 	}

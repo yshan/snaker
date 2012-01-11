@@ -91,7 +91,14 @@
 </td>
 </tr>
 <tr>
-<td><textarea id="<%=property.getName()%>"></textarea></td>
+<td>
+<%String inputType=property.getInputType();
+if("textarea".equals(inputType)){%>
+<textarea id="<%=property.getName()%>"></textarea>
+<%} else {%>
+<input type="<%=inputType%>" id="<%=property.getName()%>"></input>
+<%}%>
+</td>
 </tr>
 <%}%>
 <tr>

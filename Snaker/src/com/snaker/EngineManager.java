@@ -70,7 +70,7 @@ public class EngineManager {
 	private static final Pattern DESC_PATTERN = Pattern.compile(
 			"^//\\s*@description\\s*(.*)\\s*$", Pattern.CASE_INSENSITIVE);
 	private static final Pattern PARAM_PATTERN = Pattern.compile(
-			"^//\\s*@parameter\\s*(\\S*)\\s*(.*)\\s*$", Pattern.CASE_INSENSITIVE);
+			"^//\\s*@parameter\\s+(\\S+)\\s+(\\S+)\\s*(.*)$", Pattern.CASE_INSENSITIVE);
 
 	private Engine reloadEngine(File f) {
 		BufferedReader br = null;
@@ -113,13 +113,14 @@ public class EngineManager {
 				Matcher paramMatcher = PARAM_PATTERN.matcher(line);
 				if (paramMatcher.matches()) {
 					String name = paramMatcher.group(1);
-					String title = paramMatcher.group(2);
+					String inputType = paramMatcher.group(2);
+					String title = paramMatcher.group(3);
 					boolean optional = true;
 					if(name.startsWith("*")){ //not optional
 						name = name.substring(1);
 						optional = false;
 					}
-					def.addProperty(name, title,optional);
+					def.addProperty(name, title,inputType,optional);
 					continue;
 				}
 			} while (true);

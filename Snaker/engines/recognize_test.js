@@ -2,7 +2,7 @@
 // @name		RecognizeTest
 // @title		Recognize Test
 // @description	a simple test for recognize
-// @parameter   *url URL 
+// @parameter   *url text URL 
 // ==/UserScript==
 
 var url =  $.url;
