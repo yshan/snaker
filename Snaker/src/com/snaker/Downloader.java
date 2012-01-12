@@ -51,6 +51,7 @@ public class Downloader {
 	private long endTime;
 	private Task task;
 	private String host;
+	private String requestCharset;
 	// the total speed Statistics time , 10s
 	public static long SPEED_WINDOW_SIZE = 10 * 1000L;
 	public static long SPEED_UPDATE_FREQ = 1 * 1000L;
@@ -350,5 +351,13 @@ public class Downloader {
 	public void setResponseCharset(String responseCharset) {
 		if(responseCharset!=null && !responseCharset.isEmpty())
 			this.responseCharset = responseCharset;
+	}
+
+	public String getRequestCharset() {
+		return requestCharset;
+	}
+
+	public void setRequestCharset(String requestCharset) {
+		this.requestCharset = requestCharset;
 	}
 }

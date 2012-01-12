@@ -109,7 +109,22 @@ public class DownloadManager {
 						GetMethod get = new GetMethod(url);
 						m = get;
 					} else {
-						PostMethod post = new PostMethod(url);
+						final String requestCharset = d.getRequestCharset();
+						PostMethod post = new PostMethod(url){
+							public String getRequestCharSet() {
+								if(requestCharset!=null)
+									return requestCharset;
+								else
+									return super.getRequestCharSet();
+							}
+							public boolean getFollowRedirects() {
+				                return true;
+				            }
+						};
+						if(requestCharset!=null){
+							post.setRequestHeader("ContentType",
+									"application/x-www-form-urlencoded;charset="+requestCharset);
+						}
 						DownloadParams parms = d.getParms();
 						if (parms != null)
 							post.setRequestBody(parms.toNVP());

@@ -96,11 +96,12 @@ public abstract class Task implements Runnable{
 		send(d);
 		return d;
 	}
-	public Downloader sendPost(String url,DownloadParams parms) throws IOException{
+	public Downloader sendPost(String url,DownloadParams parms,String charset) throws IOException{
 		Downloader d = new Downloader();
 		d.setUrl(url);
 		d.setGet(false);
 		d.setParms(parms);
+		d.setRequestCharset(charset);
 		send(d);
 		return d;
 	}

@@ -73,7 +73,7 @@ public class JsHelper extends NativeObject {
 		}
 	}
 
-	public Scriptable jsFunction_post(String url, NativeObject parms)
+	public Scriptable jsFunction_post(String url, NativeObject parms,String charset)
 			throws IOException, IllegalAccessException, InstantiationException,
 			InvocationTargetException {
 		Set<Entry<Object, Object>> parmsSet = parms.entrySet();
@@ -82,7 +82,10 @@ public class JsHelper extends NativeObject {
 			downloadParams.addParm(pp.getKey().toString(), pp.getValue()
 					.toString());
 		}
-		Downloader d = task.sendPost(url, downloadParams);
+		if("undefined".equalsIgnoreCase(charset)){
+			charset = null;
+		}
+		Downloader d = task.sendPost(url, downloadParams,charset);
 		return createResponse(d);
 	}
 
