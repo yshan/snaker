@@ -22,7 +22,7 @@ function show_recognize_task(id){
 	$('#reco_image').attr("src","recognize.jsp?action=getImage&id="+id);
 	var t = $(window).height()-100-$('#recognize').height();
 	$('#recognize').offset({ top: t, left: 0 });
-	
+	$('#reco_result').unbind();
 	$('#reco_result').keydown(function(event){
 		if (event.keyCode == '13') {
      		var result = $('#reco_result').val();
