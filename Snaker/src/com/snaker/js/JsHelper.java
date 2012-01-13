@@ -36,7 +36,7 @@ public class JsHelper extends NativeObject {
 	private static final long serialVersionUID = 8096759901322275080L;
 	private JsTask task;
 	private Log logger = LogFactory.getLog(getClass());
-	private boolean followRedirects;
+	private boolean followRedirects = true;
 
 	public JsHelper() {
 		this.task = JsTask.theTask.get();
