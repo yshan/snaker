@@ -36,6 +36,7 @@ public class JsHelper extends NativeObject {
 	private static final long serialVersionUID = 8096759901322275080L;
 	private JsTask task;
 	private Log logger = LogFactory.getLog(getClass());
+	private boolean followRedirects;
 
 	public JsHelper() {
 		this.task = JsTask.theTask.get();
@@ -65,6 +66,10 @@ public class JsHelper extends NativeObject {
 		logger.debug(s);
 	}
 	
+	public void jsFunction_followRedirects(boolean followRedirects) {
+		this.followRedirects = followRedirects;
+	}
+	
 	public void jsFunction_sleep(int millis) {
 		try {
 			Thread.sleep(millis);
@@ -85,14 +90,14 @@ public class JsHelper extends NativeObject {
 		if("undefined".equalsIgnoreCase(charset)){
 			charset = null;
 		}
-		Downloader d = task.sendPost(url, downloadParams,charset);
+		Downloader d = task.sendPost(url, downloadParams,charset,followRedirects);
 		return createResponse(d);
 	}
-
+	
 	public Scriptable jsFunction_get(String url) throws IOException,
 			IllegalAccessException, InstantiationException,
 			InvocationTargetException {
-		Downloader d = task.sendGet(url);
+		Downloader d = task.sendGet(url,followRedirects);
 		return createResponse(d);
 	}
 	

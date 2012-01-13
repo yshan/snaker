@@ -89,24 +89,26 @@ public abstract class Task implements Runnable{
 		}
 		return ;
 	}
-	public Downloader sendGet(String url) throws IOException{
+	public Downloader sendGet(String url, boolean followRedirects) throws IOException{
 		Downloader d = new Downloader();
 		d.setUrl(url);
 		d.setGet(true);
+		d.setFollowRedirects(followRedirects);
 		send(d);
 		return d;
 	}
-	public Downloader sendPost(String url,DownloadParams parms,String charset) throws IOException{
+	public Downloader sendPost(String url,DownloadParams parms,String charset, boolean followRedirects) throws IOException{
 		Downloader d = new Downloader();
 		d.setUrl(url);
 		d.setGet(false);
 		d.setParms(parms);
 		d.setRequestCharset(charset);
+		d.setFollowRedirects(followRedirects);
 		send(d);
 		return d;
 	}
 	public String recognize(String url, boolean manual) throws IOException{
-		Downloader d = sendGet(url);
+		Downloader d = sendGet(url,false);
 		if(d.getStatus()==Downloader.Status.FINISHED){
 			byte[] image = d.getResponseBody(true);
 			if(recognizerManager!=null){

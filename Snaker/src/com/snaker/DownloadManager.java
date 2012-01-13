@@ -118,7 +118,7 @@ public class DownloadManager {
 									return super.getRequestCharSet();
 							}
 							public boolean getFollowRedirects() {
-				                return true;
+				                return d.isFollowRedirects();
 				            }
 						};
 						if(requestCharset!=null){

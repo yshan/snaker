@@ -44,6 +44,7 @@ function downloadLesson(lesson){
 
 function login(){
 	$.print("email="+$.email+",password="+$.password);
+	$.followRedirects(false);
 
 	//send the login query
 	var param = {};
@@ -54,6 +55,7 @@ function login(){
 	var statusCode = response.statusCode;
 	var location;
 	var result = false;
+	$.print(response.body);
 	if(statusCode == 302){
 		location = response.headers["Location"];
 		if(location.length>0 && location!=url){

@@ -52,6 +52,7 @@ public class Downloader {
 	private Task task;
 	private String host;
 	private String requestCharset;
+	private boolean followRedirects = true;
 	// the total speed Statistics time , 10s
 	public static long SPEED_WINDOW_SIZE = 10 * 1000L;
 	public static long SPEED_UPDATE_FREQ = 1 * 1000L;
@@ -359,5 +360,13 @@ public class Downloader {
 
 	public void setRequestCharset(String requestCharset) {
 		this.requestCharset = requestCharset;
+	}
+
+	public boolean isFollowRedirects() {
+		return followRedirects;
+	}
+
+	public void setFollowRedirects(boolean followRedirects) {
+		this.followRedirects = followRedirects;
 	}
 }
