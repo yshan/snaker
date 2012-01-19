@@ -225,6 +225,7 @@ function submitOrder(){
 		}
 		if(msg=='验证码不正确'){
 			genOrderRandCode();
+			return false;
 		} 
 		if(msg.length>0){
 			$.print("提交订单失败:"+msg);
