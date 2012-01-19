@@ -62,6 +62,7 @@ function login(){
 	var url = "https://dynamic.12306.cn/otsweb/loginAction.do?method=login";
 	var response = $.post(url,param);
 	var body= response.body;
+	$.print(body);
 	if(body.indexOf("您最后一次登录时间为")!=-1){
 		$.print("登录成功");
 		return true;
@@ -99,7 +100,6 @@ function queryTrain(trainNumber){
 }
 
 var timeRegex = /[0-9][0-9]:[0-9][0-9]/;
-var yqInfoRegex = /[0-9]{20}/;
 
 function findTicket(trainCode){
 	var url = "https://dynamic.12306.cn/otsweb/order/querySingleAction.do?method=queryLeftTicket&orderRequest.train_date="+$.date+"&orderRequest.from_station_telecode="+getStationCode($.from)+"&orderRequest.to_station_telecode="+getStationCode($.to)+"&orderRequest.train_no="+trainCode+"&trainPassType=QB&trainClass=QB%23D%23Z%23T%23K%23QT%23&includeStudent=00&seatTypeAndNum=&orderRequest.start_time_str=00%3A00--24%3A00";
@@ -109,13 +109,15 @@ function findTicket(trainCode){
 		$.print("没票了");
 		return false;
 	}
-	
+	$.print(body);
 	trainInfo = {};
 	var fs = body.split(",");
 	trainInfo.startTime=timeRegex.exec(fs[2])[0];
 	trainInfo.arriveTime=timeRegex.exec(fs[3])[0];
 	trainInfo.lishi=fs[4];
-	trainInfo.ypInfoDetail=yqInfoRegex.exec(fs[16])[0];
+	tag1 =fs[16].lastIndexOf("#");
+	tag2 =fs[16].indexOf("'",tag1);
+	trainInfo.ypInfoDetail=fs[16].substring(tag1+1,tag2);
 	return true;
 }
 
@@ -236,14 +238,14 @@ function submitOrder(){
 }
 
 genLoginRandCode();
-while(!login()){$.sleep(1000);}
+while(!login()){}
 var trainCode = queryTrain($.trainNumber);
 if(trainCode!=null){
 	$.print("Find train code:"+trainCode);
 	if(findTicket(trainCode)){	
 		bookTicket();
 		genOrderRandCode();
-		while(!submitOrder()){$.sleep(3000);}
+		while(!submitOrder()){}
 	}
 }
 else{

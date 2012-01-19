@@ -31,6 +31,7 @@ import com.snaker.Downloader;
 import com.snaker.Downloader.Header;
 import com.snaker.Engine;
 import com.snaker.Engine.EngineProperty;
+import com.snaker.util.Console;
 
 public class JsHelper extends NativeObject {
 	private static final long serialVersionUID = 8096759901322275080L;
@@ -63,7 +64,7 @@ public class JsHelper extends NativeObject {
 	}
 
 	public void jsFunction_print(String s) {
-		logger.debug(s);
+		Console.println(s);
 	}
 	
 	public void jsFunction_followRedirects(boolean followRedirects) {

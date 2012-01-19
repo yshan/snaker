@@ -19,5 +19,7 @@
 	<classpathentry kind="lib" path="lib/js.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
 	<classpathentry kind="lib" path="lib/commons-el-from-jetty-5.1.4.jar"/>
+	<classpathentry kind="lib" path="lib/jna.jar"/>
+	<classpathentry kind="lib" path="lib/platform.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
