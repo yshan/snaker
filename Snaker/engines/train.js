@@ -223,7 +223,7 @@ function submitOrder(){
 		if(allmsg.length>=2){
 			msg = allmsg[1];
 		}
-		if(msg=='验证码不正确'){
+		if(msg.indexOf('验证码不正确')!=-1){
 			genOrderRandCode();
 			return false;
 		} 
